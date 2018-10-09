@@ -11,12 +11,11 @@ public interface ProductRepository extends MongoRepository<Product, Integer>{
 	
 	@Query("{'productPrice':{$gt:?0 , $lt:?1}	,	'productCategory':?2")
 	public List<Product> findByProductByPriceCategory(int  lowPrice,int highPrice,String productCategory);
-	
-	public List<Product> findByProductName(String productName);
-	
+
+/*	
 	@Query("{'productManufacturer': $0, 'productPrice': {$gt:?1 , $lt:?2}")
 	public List<Product> findByProductManufacturerPrice(String productManufacturer, int lowprice,int highPrice);
- 	
+ 	*/
 
 	
 

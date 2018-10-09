@@ -41,11 +41,11 @@ public class ProductServiceImpl implements ProductService {
 
 	}
 	@Override
-	public void findByProductByPriceCategory(){
-	  productRepository.findByProductByPriceCategory(10, 200, "Electronics");
+	public List<Product> findByProductByPriceCategory(int  lowPrice,int highPrice,String productCategory){
+	 return  productRepository.findByProductByPriceCategory(10, 200, "Electronics");
 	}
-	@Override
+	/*@Override
 	public void findByProductManufacturerPrice() {
 		productRepository.findByProductManufacturerPrice("Moto", 10000, 20000);
-	}
+	}*/
 }

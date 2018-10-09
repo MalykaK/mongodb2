@@ -1,5 +1,7 @@
 package com.capgemini.productapp.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.capgemini.productapp.entity.Product;
@@ -43,18 +46,6 @@ public class ProductController {
 		return new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
 	}
 	
-	@GetMapping("/products/{productId}")
-	public ResponseEntity<Product> findProductById(@PathVariable int productId) {
-		try {
-			Product productFromDb = 
-					productService.findProductById(productId);
-			return new ResponseEntity<Product>(productFromDb, HttpStatus.OK);
-		}
-		catch(ProductNotFoundException exception) {
-			//logged the exception
-		}
-		return new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
-	}
 	
 	@DeleteMapping("/products/{productId}")
 	public ResponseEntity<Product> deleteProduct(Product product) {
@@ -71,5 +62,25 @@ public class ProductController {
 		}		
 		return new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
 	}
+	
+	@GetMapping("/products/{productId}")
+	public ResponseEntity<Product> findProductById(@PathVariable int productId) {
+		try {
+			Product productFromDb = 
+					productService.findProductById(productId);
+			return new ResponseEntity<Product>(productFromDb, HttpStatus.OK);
+		}
+		catch(ProductNotFoundException exception) {
+			//logged the exception
+		}
+		return new ResponseEntity<Product>(HttpStatus.NOT_FOUND);
+	}
+
+	@GetMapping("/custom")
+	public ResponseEntity<List> findByProductCategoryAndPrice(@RequestParam  int lowPrice, int highPrice, String productCategory) {
+		List<Product> productFromDb = productService.findByProductByPriceCategory(lowPrice, highPrice,productCategory);
+		return new ResponseEntity<List>(productFromDb, HttpStatus.OK);
+	}
+	       
 	
 }
